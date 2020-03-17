@@ -1,9 +1,13 @@
 import * as React from "react";
 
-import "./App.scss";
+import styled from "styled-components";
+
+const StyledApp = styled.div`
+    background-color: red;
+`;
 
 const App = () => {
-    return <div className="App">App</div>;
+    return <StyledApp className="App">App</StyledApp>;
 };
 
 export default App;
