@@ -3,7 +3,7 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
     entry: path.resolve(__dirname, "./src/index.js"),
@@ -31,12 +31,20 @@ module.exports = {
             },
         ],
     },
+    resolve: {
+        alias: {
+            react: "preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "preact/compat",
+            // Must be below test-utils
+        },
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebPackPlugin({
             template: "src/index.html",
             hash: true,
         }),
-        // new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin(),
     ],
 };
