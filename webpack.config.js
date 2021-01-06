@@ -3,15 +3,23 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
     entry: path.resolve(__dirname, "./src/index.js"),
     devtool: "eval-cheap-module-source-map", // inline-source-map is the default
-    output: {
-        path: path.resolve(__dirname, "./dist"),
-        filename: "bundle.js",
+    devServer: {
+        contentBase: "./dist",
+        hot: true,
     },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebPackPlugin({
+            template: "src/index.html",
+            hash: true,
+        }),
+        // new BundleAnalyzerPlugin(),
+    ],
     module: {
         rules: [
             {
@@ -31,20 +39,8 @@ module.exports = {
             },
         ],
     },
-    resolve: {
-        alias: {
-            react: "preact/compat",
-            "react-dom/test-utils": "preact/test-utils",
-            "react-dom": "preact/compat",
-            // Must be below test-utils
-        },
+    output: {
+        path: path.resolve(__dirname, "./dist"),
+        filename: "bundle.js",
     },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebPackPlugin({
-            template: "src/index.html",
-            hash: true,
-        }),
-        new BundleAnalyzerPlugin(),
-    ],
 };
