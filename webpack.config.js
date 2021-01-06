@@ -10,6 +10,8 @@ module.exports = {
     devtool: "eval-cheap-module-source-map", // inline-source-map is the default
     devServer: {
         contentBase: "./dist",
+        compress: true,
+        port: 9000,
         hot: true,
     },
     plugins: [
@@ -42,5 +44,10 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "./dist"),
         filename: "bundle.js",
+    },
+    resolve: {
+        alias: {
+            "react-dom": "@hot-loader/react-dom",
+        },
     },
 };
